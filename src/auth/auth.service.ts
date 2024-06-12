@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { LoginDto } from './dto';
+import { LoginDto } from './dto/login.dto';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
@@ -27,6 +27,23 @@ export class AuthService {
 
     return {
       data: accessToken,
+    };
+  }
+
+  async refresh() {
+    const refreshToken = await this.jwtService.signAsync(
+      {
+        sub: 'userId',
+        email: 'email',
+      },
+      {
+        expiresIn: '30d',
+        secret: this.configService.get<string>('JWT_KEY_ACCESS'),
+      },
+    );
+
+    return {
+      data: refreshToken,
     };
   }
 }
