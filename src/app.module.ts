@@ -9,6 +9,7 @@ import { WithdrawalModule } from './withdrawal/withdrawal.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { HealthModule } from './health/health.module';
 import { environmentSchema } from './utils/types/config.type';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -20,14 +21,18 @@ import { environmentSchema } from './utils/types/config.type';
           .default('development'),
         PORT: Joi.number().default(3000),
         DATABASE_URI: Joi.string(),
+        JWT_KEY_ACCESS: Joi.string(),
+        JWT_KEY_REFRESH: Joi.string(),
       }),
     }),
 
-    WithdrawalModule,
+    // WithdrawalModule,
 
-    PrismaModule,
+    // PrismaModule,
 
-    HealthModule,
+    // HealthModule,
+
+    AuthModule,
   ],
 
   providers: [
